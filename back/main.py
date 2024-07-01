@@ -1,7 +1,93 @@
 from bs4 import BeautifulSoup
 import requests
 import re
+import mysql.connector
 
+# Подключение дб
+db = mysql.connector.connect(user='root', password='root', host='localhost', database='hh')
+cursor = db.cursor()
+
+create_prof_table_query = """
+CREATE TABLE IF NOT EXISTS prof (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    job VARCHAR(100),
+    counter INT,
+    address VARCHAR(100)
+)
+"""
+
+create_vacancies_table_query = """
+CREATE TABLE IF NOT EXISTS vacancies (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name VARCHAR(100),
+    href VARCHAR(100)
+)
+"""
+
+create_info_vacancies_table_query = """
+CREATE TABLE IF NOT EXISTS info_vacancies (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    vacs VARCHAR(100),
+    money VARCHAR(100),
+    exp VARCHAR(100),
+    busyness VARCHAR(100),
+    schedule VARCHAR(100),
+    company VARCHAR(100),
+    address VARCHAR(100)
+)
+"""
+
+create_resumes_table_query = """
+CREATE TABLE IF NOT EXISTS resumes (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name VARCHAR(100),
+    href VARCHAR(100)
+)
+"""
+
+create_info_resumes_table_query = """
+CREATE TABLE IF NOT EXISTS info_resumes (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    vacs VARCHAR(100),
+    spec VARCHAR(100),
+    exp VARCHAR(100),
+    busyness VARCHAR(100),
+    schedule VARCHAR(100),
+    gender VARCHAR(100)
+)
+"""
+
+insert_prof_query = """
+    INSERT INTO prof 
+    (job, counter, address)
+    VALUES ( %s, %s, %s )
+"""
+
+insert_vacancies_table_query = """
+    INSERT INTO vacancies 
+    (name, href)
+    VALUES ( %s, %s )
+"""
+
+insert_info_vacancies_table_query = """
+    INSERT INTO info_vacancies
+    (vacs, money, exp, busyness, schedule, company, address)
+    VALUES ( %s, %s, %s, %s, %s, %s, %s )
+"""
+
+insert_resumes_table_query = """
+    INSERT INTO resumes 
+    (name, href)
+    VALUES ( %s, %s )
+"""
+
+insert_info_resumes_table_query = """
+    INSERT INTO info_resumes 
+    (vacs, spec, exp, busyness, schedule, gender)
+    VALUES ( %s, %s, %s, %s, %s, %s )
+"""
+
+# Работа с парсингом
 url = "https://hh.ru/vacancies"
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 OPR/109.0.0.0"
@@ -45,6 +131,7 @@ for link in href:
     counter.extend(count)
     address.extend(links)
 counter = [element.split("\xa0")[0] for element in counter]
+res = list(zip(job, counter, address))
 
 # поиск вакансий и резюме на необходимую должность
 user_input = str(input("Введите вашу профессию: ")).lower()
@@ -71,19 +158,24 @@ if user_input in job:
         if num > 30:
             num = 30  # ограничение от всяких 250+ страниц
 
-        href, name = [], []
+        href, name, index = [], [], []
+        i = 0
         for pages in range(num):
             # получение данных по вакансиям. Названия, ссылки
             all_vac = soup.find_all("h2", class_="bloko-header-section-2")
             for h2 in all_vac:
                 name.append(h2.span.a.span.text)
                 href.append(h2.span.a["href"])
+                index.append(str(i))
+                i += 1      
         name = [element.lower() for element in name]
+        res_vac = list(zip(name, href))
+        res_res, result_res = [], []
 
         # Инфо о вакансии
         user_input = input("Введите вакансию: ").lower()
-        if user_input in name:
-            index = name.index(user_input)
+        if user_input in index:
+            index = index.index(user_input)
             url = href[index]
 
             page = requests.get(url, headers=headers)
@@ -144,6 +236,7 @@ if user_input in job:
             schedule = [element.lower() for element in schedule]
             company = [element.lower() for element in company]
             address = [element.lower() for element in address]
+            result_vac = list(zip(vacs, money, exp, busyness, schedule, company, address))
         else:
             print("error: Иди проспись")
 
@@ -166,20 +259,24 @@ if user_input in job:
         if num > 30:
             num = 30  # ограничение от всяких 250+ страниц
 
-        href, name = [], []
+        href, name, index = [], [], []
+        i = 0
         for pages in range(num):
             # получение данных по резюме. Названия, ссылки
             all_res = soup.find_all("span", class_="title--iPxTj4waPRTG9LgoOG4t")
             for span in all_res:
                 name.append(span.a.span.text)
                 href.append(span.a["href"])
+                index.append(str(i))
+                i += 1
         name = [element.lower() for element in name]
         href = ["https://hh.ru" + direction for direction in href]
+        res_res = list(zip(name, href))
+        res_vac, result_vac = [], []
 
         # Инфо о резюме
-        user_input = input("Введите интересующее резюме: ").lower()
-        if user_input in name:
-            index = name.index(user_input)
+        user_input = input("Введите индекс резюме: ").lower()
+        if user_input in index:
             url = href[index]
 
             page = requests.get(url, headers=headers)
@@ -249,5 +346,21 @@ if user_input in job:
             busyness = [element.lower() for element in busyness]
             schedule = [element.lower() for element in schedule]
             gender = [element.lower() for element in gender]
+            result_res = list(zip(vacs, exp, spec, busyness, schedule, gender))
         else:
             print("error: Иди проспись")
+
+cursor.execute(create_prof_table_query)
+cursor.execute(create_vacancies_table_query)
+cursor.execute(create_info_vacancies_table_query)
+cursor.execute(create_resumes_table_query)
+cursor.execute(create_info_resumes_table_query)
+
+cursor.executemany(insert_prof_query, res)
+cursor.executemany(insert_vacancies_table_query, res_vac)
+cursor.executemany(insert_info_vacancies_table_query, result_vac)
+cursor.executemany(insert_resumes_table_query, res_res)
+cursor.executemany(insert_info_resumes_table_query, result_res)
+db.commit()
+
+db.close()
