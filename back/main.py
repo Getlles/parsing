@@ -7,53 +7,58 @@ import mysql.connector
 db = mysql.connector.connect(user='root', password='root', host='localhost', database='hh')
 cursor = db.cursor()
 
+delete_tables_query = """
+use hh;
+drop table if exists info_vacancies, vacancies, info_resumes, resumes
+"""
+
 create_prof_table_query = """
 CREATE TABLE IF NOT EXISTS prof (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    job VARCHAR(100),
+    job VARCHAR(10000),
     counter INT,
-    address VARCHAR(100)
+    address VARCHAR(10000)
 )
 """
 
 create_vacancies_table_query = """
 CREATE TABLE IF NOT EXISTS vacancies (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    name VARCHAR(100),
-    href VARCHAR(100)
+    name VARCHAR(1000),
+    href VARCHAR(500)
 )
 """
 
 create_info_vacancies_table_query = """
 CREATE TABLE IF NOT EXISTS info_vacancies (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    vacs VARCHAR(100),
-    money VARCHAR(100),
-    exp VARCHAR(100),
-    busyness VARCHAR(100),
-    schedule VARCHAR(100),
-    company VARCHAR(100),
-    address VARCHAR(100)
+    vacs VARCHAR(1000),
+    money VARCHAR(1000),
+    exp VARCHAR(1000),
+    busyness VARCHAR(1000),
+    schedule VARCHAR(1000),
+    company VARCHAR(1000),
+    address VARCHAR(1000)
 )
 """
 
 create_resumes_table_query = """
 CREATE TABLE IF NOT EXISTS resumes (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    name VARCHAR(100),
-    href VARCHAR(100)
+    name VARCHAR(1000),
+    href VARCHAR(500)
 )
 """
 
 create_info_resumes_table_query = """
 CREATE TABLE IF NOT EXISTS info_resumes (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    vacs VARCHAR(100),
-    spec VARCHAR(100),
-    exp VARCHAR(100),
-    busyness VARCHAR(100),
-    schedule VARCHAR(100),
-    gender VARCHAR(100)
+    vacs VARCHAR(1000),
+    spec VARCHAR(1000),
+    exp VARCHAR(1000),
+    busyness VARCHAR(1000),
+    schedule VARCHAR(1000),
+    gender VARCHAR(1000)
 )
 """
 
@@ -171,7 +176,7 @@ if user_input in job:
         name = [element.lower() for element in name]
         res_vac = list(zip(name, href))
         res_res, result_res = [], []
-
+        
         # Инфо о вакансии
         user_input = input("Введите вакансию: ").lower()
         if user_input in index:
