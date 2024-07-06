@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="index.css" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet"/>
     <title>Главная</title>
 </head>
 <body>
@@ -18,14 +18,28 @@
             </div>
         </header>
 
-        <div class="container">
+        <div class="containeer">
             <h1 class="content1">Парсинг</h1>
             <h2 class="content2">вакансий и резюме</h2>
             <p class="content3">только из hh.ru на большее мы не способны</p>
             
-            <a href="parsing.html">
+            <p class="text_"> Что Вы ищете? </p>
+            <form method="post" id="form_inp" action="/">
+                <div class="search">
+                    <input type="text" id="user_input" name="user_input" class="user_input" required/>
+                    <button type="submit" class="btn_sub">Поиск</button>
+                </div>
+            </form>
+            
+            <a href="{{ url_for('vacancies') }}">
                 <button type="button" class="btn">
-                    <h2 class="btn_text">НАЧАТЬ</h2>
+                    <h2 class="btn_text">Вакансии</h2>
+                </button>
+            </a>
+
+            <a href="{{ url_for('resumes') }}">
+                <button type="button" class="btn">
+                    <h2 class="btn_text">Резюме</h2>
                 </button>
             </a>
         </div>
@@ -38,5 +52,6 @@
             </div>
         </footer>
     </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
