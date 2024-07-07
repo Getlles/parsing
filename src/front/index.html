@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet"/>
+    <title>Главная</title>
+</head>
+<body>
+    <div class="all">
+        <header>
+            <div class="header">
+                <div class="about">
+                    <h1 class="name">Parsing Platform</h1>
+                    <h4 class="company">Спасите!!!</h4>
+                </div>
+                <h2 class="help">Помощи.нет</h2>
+            </div>
+        </header>
+
+        <div class="containeer">
+            <h1 class="content1">Парсинг</h1>
+            <h2 class="content2">вакансий и резюме</h2>
+            <p class="content3">только из hh.ru на большее мы не способны</p>
+            
+            <p class="text_"> Что Вы ищете? </p>
+            <form method="post" id="form_inp" action="/">
+                <div class="search">
+                    <input type="text" id="user_input" name="user_input" class="user_input" required/>
+                    <button type="submit" class="btn_sub">Поиск</button>
+                </div>
+            </form>
+            
+            <a href="{{ url_for('vacancies') }}">
+                <button type="button" class="btn">
+                    <h2 class="btn_text">Вакансии</h2>
+                </button>
+            </a>
+
+            <a href="{{ url_for('resumes') }}">
+                <button type="button" class="btn">
+                    <h2 class="btn_text">Резюме</h2>
+                </button>
+            </a>
+        </div>
+
+        <footer>
+            <div class="footer">
+                <h2 class="down">PP.help</h2>
+                <p class="down_">+7(номер скама)</p>
+                <p class="down_">адресатоже.нет</p>
+            </div>
+        </footer>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

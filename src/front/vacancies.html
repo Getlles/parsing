@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet"/>
+    <title>Parsing Platform</title>
+</head>
+<body>
+    <header>
+        <div class="header">
+            <div class="about">
+                <h1 class="name">Parsing Platform</h1>
+                <h4 class="company">Спасите!!!</h4>
+            </div>
+            <h2 class="help">Помощи.нет</h2>
+        </div>
+    </header>
+    
+    <!-- <form method="post" id="form_inp" action="/allvac">
+        <div class="search">
+            <input type="text" id="profi" name="profi" class="user_input" required/>
+            <button type="submit" class="btn_sub">Поиск</button>
+        </div>
+    </form> -->
+
+    <hr>
+
+    <div class="container"> <!-- все карточки-таблички -->
+        
+        <div class="all-object">
+            {% for vacancies in vacancie %}
+            <div class="object-vac" d-exp="{{ vacancies.exp }}" d-bus="{{ vacancies.busyness }}"> <!-- карточка-табличка -->
+                <h2 class="vacs">{{ vacancies.vacs }}</h2>
+                <p class="about_vacs">{{ vacancies.money }}, Опыт работы: {{ vacancies.exp }}</p>
+                <p class="about_work">{{ vacancies.busyness }}, {{vacancies.schedule }}</p>
+                <h4 class="comp">{{ vacancies.company }}</h4>
+                <p class="address">{{ vacancies.address }}</p>
+                
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="filter">
+
+            <div class="vacs_money">
+                <h3 class="text">Сортировать по:</h3>
+                <div class="z-p">
+                    <input type="checkbox" name="money"/>
+                    <label for="money">По убыванию зарплат</label>
+                </div>
+                <div class="z-p">
+                    <input type="checkbox" name="money"/>
+                    <label for="money">По возрастанию зарплат</label>
+                </div>
+            </div>
+
+            <div class="exp">
+                <h3 class="text">Опыт работы</h3>
+                <div class="btn_exp">
+                    <input type="radio" name="btn__exp" checked/>
+                    <label for="btn__exp">Не имеет значения</label>
+                </div>
+                <div class="btn_exp">
+                    <input type="radio" name="btn__exp"/>
+                    <label for="btn__exp">1-3 года</label>
+                </div>
+                <div class="btn_exp">
+                    <input type="radio" name="btn__exp"/>
+                    <label for="btn__exp">3-6 лет</label>
+                </div>
+                <div class="btn_exp">
+                    <input type="radio" name="btn__exp"/>
+                    <label for="btn__exp">Более 6 лет</label>
+                </div>
+                <div class="btn_exp">
+                    <input type="radio" name="btn__exp"/>
+                    <label for="btn__exp">Без опыта</label>
+                </div>
+            </div>
+
+            <div class="vacs_company">
+                <h3 class="text">Название компании</h3>
+                <input type="text", name="inp_comp"/>
+            </div>
+
+            <div class="busyness">
+                <h3 class="text">Тип занятости</h3>
+                <div class="busy">
+                    <input type="checkbox" name="bus">
+                    <label for="bus">Полная занятость</label>
+                </div>
+                <div class="busy">
+                    <input type="checkbox" name="bus">
+                    <label for="bus">Частичная занятость</label>
+                </div>
+                <div class="busy">
+                    <input type="checkbox" name="bus">
+                    <label for="bus">Проектная работа</label>
+                </div>
+                <div class="busy">
+                    <input type="checkbox" name="bus">
+                    <label for="bus">Волонтерство</label>
+                </div>
+                <div class="busy">
+                    <input type="checkbox" name="bus">
+                    <label for="bus">Стажировка</label>
+                </div>
+            </div>
+
+            <div class="schedule">
+                <h3 class="text">График работы</h3>
+                <div class="sched">
+                    <input type="checkbox" name="sch">
+                    <label for="sch">Сменный график</label>
+                </div>
+                <div class="sched">
+                    <input type="checkbox" name="sch">
+                    <label for="sch">Полный день</label>
+                </div>
+                <div class="sched">
+                    <input type="checkbox" name="sch">
+                    <label for="sch">Удаленная работа</label>
+                </div>
+                <div class="sched">
+                    <input type="checkbox" name="sch">
+                    <label for="sch">Гибкий график</label>
+                </div>
+                <div class="sched">
+                    <input type="checkbox" name="sch">
+                    <label for="sch">Вахтовый метод</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+        
+    </div>
+
+    <footer>
+        <div class="footer">
+            <h2 class="down">PP.help</h2>
+            <p class="down_">+7(номер скама)</p>
+            <p class="down_">адресатоже.нет</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

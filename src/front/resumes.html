@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+    <title>Parsing Platform</title>
+</head>
+<body>
+    <header>
+        <div class="header">
+            <div class="about">
+                <h1 class="name">Parsing Platform</h1>
+                <h4 class="company">Спасите!!!</h4>
+            </div>
+            <h2 class="help">Помощи.нет</h2>
+        </div>
+    </header>
+    
+    <form method="post">
+        <div class="search">
+            <input type="text" name="user_input" class="find_search" required/>
+            <button type="submit" class="btn_sub">Поиск</button>
+        </div>
+    </form>
+
+    <hr>
+
+    <div class="container"> <!-- все карточки-таблички -->
+        
+        <div class="all-object">
+            
+            <div class="object-res"> <!-- карточка-табличка -->
+
+                <h2 class="vacs"> Name Res </h2>
+                <p class="spec">spec</p>
+                <p class="about_res">exp, gender</p>
+                <p class="bus">Работать 24/7, без зп, без жизни (личной тоже)</p>
+                <p class="sche">Работать 24/7, без зп, без жизни (личной тоже)</p>
+
+            </div>
+
+        </div>
+
+        <div class="filter">
+
+            <div class="exp">
+                <h3 class="text">Опыт работы</h3>
+                <div class="btn_exp">
+                    <input type="radio" name="btn__exp" checked/>
+                    <label for="btn__exp">Не имеет значения</label>
+                </div>
+                <div class="btn_exp">
+                    <input type="radio" name="btn__exp"/>
+                    <label for="btn__exp">1-3 года</label>
+                </div>
+                <div class="btn_exp">
+                    <input type="radio" name="btn__exp"/>
+                    <label for="btn__exp">3-6 лет</label>
+                </div>
+                <div class="btn_exp">
+                    <input type="radio" name="btn__exp"/>
+                    <label for="btn__exp">Более 6 лет</label>
+                </div>
+                <div class="btn_exp">
+                    <input type="radio" name="btn__exp"/>
+                    <label for="btn__exp">Без опыта</label>
+                </div>
+            </div>
+
+            <div class="res_spec">
+                <h3 class="text">Специализация:</h3>
+                <input type="text", name="inp_spec"/>
+            </div>
+
+            <div class="res_gender">
+                <h3 class="text">Гендер:</h3>
+                <div class="btn_gender">
+                    <input type="radio" name="btn__gen", checked/>
+                    <label for="btn__gen">Не имеет значения</label>
+                </div>
+                <div class="btn_gender">
+                    <input type="radio" name="btn__gen"/>
+                    <label for="btn__gen">Мужской</label>
+                </div>
+                <div class="btn_gender">
+                    <input type="radio" name="btn__gen"/>
+                    <label for="btn__gen">Женский</label>
+                </div>
+            </div>
+
+            <div class="busyness">
+                <h3 class="text">Тип занятости</h3>
+                <div class="busy">
+                    <input type="checkbox" name="bus">
+                    <label for="bus">Полная занятость</label>
+                </div>
+                <div class="busy">
+                    <input type="checkbox" name="bus">
+                    <label for="bus">Частичная занятость</label>
+                </div>
+                <div class="busy">
+                    <input type="checkbox" name="bus">
+                    <label for="bus">Проектная работа</label>
+                </div>
+                <div class="busy">
+                    <input type="checkbox" name="bus">
+                    <label for="bus">Волонтерство</label>
+                </div>
+                <div class="busy">
+                    <input type="checkbox" name="bus">
+                    <label for="bus">Стажировка</label>
+                </div>
+            </div>
+
+            <div class="schedule">
+                <h3 class="text">График работы</h3>
+                <div class="sched">
+                    <input type="checkbox" name="sch">
+                    <label for="sch">Сменный график</label>
+                </div>
+                <div class="sched">
+                    <input type="checkbox" name="sch">
+                    <label for="sch">Полный день</label>
+                </div>
+                <div class="sched">
+                    <input type="checkbox" name="sch">
+                    <label for="sch">Удаленная работа</label>
+                </div>
+                <div class="sched">
+                    <input type="checkbox" name="sch">
+                    <label for="sch">Гибкий график</label>
+                </div>
+                <div class="sched">
+                    <input type="checkbox" name="sch">
+                    <label for="sch">Вахтовый метод</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+        
+    </div>
+
+    <footer>
+        <div class="footer">
+            <h2 class="down">PP.help</h2>
+            <p class="down_">+7(номер скама)</p>
+            <p class="down_">адресатоже.нет</p>
+        </div>
+    </footer>
+</body>
+</html>
