@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet"/>
     <title>Parsing Platform</title>
 </head>
 <body>
@@ -17,29 +17,27 @@
         </div>
     </header>
     
-    <form method="post">
+    <!-- <form method="post">
         <div class="search">
             <input type="text" name="user_input" class="find_search" required/>
             <button type="submit" class="btn_sub">Поиск</button>
         </div>
-    </form>
-
-    <hr>
+    </form> -->
 
     <div class="container"> <!-- все карточки-таблички -->
         
         <div class="all-object">
-            
+            {% for resumes in resume %}
             <div class="object-res"> <!-- карточка-табличка -->
-
-                <h2 class="vacs"> Name Res </h2>
-                <p class="spec">spec</p>
-                <p class="about_res">exp, gender</p>
-                <p class="bus">Работать 24/7, без зп, без жизни (личной тоже)</p>
-                <p class="sche">Работать 24/7, без зп, без жизни (личной тоже)</p>
+                
+                <h2 class="vacs">{{ resumes.vacs }}</h2>
+                <p class="spec">{{ resumes.spec }}</p>
+                <p class="about_res">{{ resumes.exp }}, {{ resumes.gender }}</p>
+                <p class="bus">{{ resumes.busyness }}</p>
+                <p class="sche">{{ resumes.schedule }}</p>
 
             </div>
-
+            {% endfor %}
         </div>
 
         <div class="filter">
@@ -74,19 +72,19 @@
             </div>
 
             <div class="res_gender">
-                <h3 class="text">Гендер:</h3>
-                <div class="btn_gender">
-                    <input type="radio" name="btn__gen", checked/>
-                    <label for="btn__gen">Не имеет значения</label>
-                </div>
-                <div class="btn_gender">
-                    <input type="radio" name="btn__gen"/>
-                    <label for="btn__gen">Мужской</label>
-                </div>
-                <div class="btn_gender">
-                    <input type="radio" name="btn__gen"/>
-                    <label for="btn__gen">Женский</label>
-                </div>
+                <h3 class="text">Пол:</h3>
+                <form action="/allres" method="post" class="filt_srch">
+                    <label>
+                        <input type="radio" name="btn__gen", value="не имеет значения", checked/> не имеет значения 
+                    </label>
+                    <label>
+                        <input type="radio" name="btn__gen", value="мужчина"/> мужчина 
+                    </label>
+                    <label>
+                        <input type="radio" name="btn__gen", value="женщина"/> женщина 
+                    </label>
+                    <button type="submit" class="btn_acc"> Показать </button>
+                </form>
             </div>
 
             <div class="busyness">
